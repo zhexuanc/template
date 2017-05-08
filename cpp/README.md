@@ -5,20 +5,21 @@ that includes several hundreds of computer vision algorithms.
 
 ## Major Dependencies
 
-- [OpenCV](http://opencv.org/)
 - [Facebook Thrift](https://github.com/facebook/fbthrift)
-- [MongoDB](https://www.mongodb.com/)
- and [C++ legacy driver](https://github.com/mongodb/mongo-cxx-driver/tree/legacy)
 
 # Structure
 
-- `server/`: implementation of the IMM server
-- `test/`: implementation of the IMM testing client
+- `server/`: implementation of the template server
+- `test/`: implementation of the template testing client
+
+To get started, place the directory under
+
+## Step
 
 ## Build
 
 ```
-make
+make all
 ```
 
 ## Run
@@ -29,7 +30,7 @@ Start the server:
 make start_server
 ```
 
-Wait until you see `IMM at 8082`.
+Wait until you see `8082`.
 
 Alternatively,
 
