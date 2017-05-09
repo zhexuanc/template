@@ -1,75 +1,54 @@
 # Template microservice in Java
 
-This is a template of microservice built in lucida
+This is a template of microservice built in lucida. To build your own service, follow the steps below.
 
 ## Major Dependencies
 
-- [OpenCV](http://opencv.org/)
-- [Facebook Thrift](https://github.com/facebook/fbthrift)
-- [MongoDB](https://www.mongodb.com/)
- and [C++ legacy driver](https://github.com/mongodb/mongo-cxx-driver/tree/legacy)
+- [gradle](https://gradle.org/)
 
 # Structure
 
-- `server/`: implementation of the IMM server
-- `test/`: implementation of the IMM testing client
+- `src/main/java/template/`: implementation of the template server
+- `TemplateClient/`: implementation of the template testing client
 
-## Build
+### Step 0: move the directory 
 
-```
-make
-```
+To get started, place the directory under `lucida/lucida` folder, and change the name of your directory into a specified name represent your service.
 
-## Run
+### Step1: change the configuration
 
-Start the server:
+Change the port number for your service (default is 8888) in [`src/main/java/template/TemplateDaemon.java`](src/main/java/template/TemplateDaemon.java).
 
-```
-make start_server
-```
+### Step2: implement your own create/learn/infer methods
 
-Wait until you see `IMM at 8082`.
+Implement your own create/learn/infer methods in [`src/main/java/template/TEServiceHandler.java`](src/main/java/template/TEServiceHandler.java). The spec of these three function is in the toppest-level readme. Your are free to import different packages for your service, but remember to add the dependence correctly.
 
-Alternatively,
+### Step3: update the `Makefile` and `build.gradle`
 
-```
-cd server
-./imm_server
-```
+Update the [`Makefile`](Makefile) and [`build.gradle`](build.gradle). The default one has included the generating Thrift stubs code. You only need to add the dependence of your own service.
 
-## Test
+### Step4: test your service individually
 
-```
-make start_test
-```
+Change the [test application](TemplateClient) corresponding to your service. After that, do the following steps under this directory to test your service. Remember to change the test query to make sure your service works.
 
-Alternatively,
+- build 
 
-```
-cd test
-./imm_client (num_images)
-```
+ ```
+ make all
+ ```
 
-7 images `test/test*.jpg` are provided.
+- start server
 
-## Developing Notes
+ ```
+ make start_server
+ ```
+- start testing
 
-1. The linker flags in `server/Makefile` are complicated and should be modified with caution.
-Specifically, `-lmongoclient` should precede `-lssl` and `-lcrypto`.
+ ```
+ make start_test
+ ```
 
-2. `server/Image.cpp` uses `cv::SurfFeatureDetector` to turn
-an image into a descriptor matrix both represented as `std::string`,
-and `server/IMMHandler.cpp` saves the matrix into and loads it from
-[GridFS](https://docs.mongodb.com/manual/core/gridfs/).
+### Step5: insert your service into Lucida
 
+Modify the top-level `Makefile` and `lucida/Makefile` so that `make local` and `make start_all` include your service.
 
-
-## Local Development
-
-- Implement your own create/learn/infer function, and change corresponding configuration such as host and port.
-
-- From this directory, type `make` to compile, and `make start_server` to start the service. It requires Java 8. 
-
-- From this directory, type `make start_test` to test the running server.
-
-## How to 
